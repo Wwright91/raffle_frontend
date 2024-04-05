@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+import Raffles from "./components/raffles/Raffles";
 import ShowModal from "./components/modal/ShowModal";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -114,9 +115,7 @@ function App() {
         />
         <button>Create New Raffle</button>
       </form>
-      {raffles.map(({ name, id }) => {
-        return <p key={id}>{name}</p>;
-      })}
+      <Raffles raffles={raffles} />
     </div>
   );
 }
