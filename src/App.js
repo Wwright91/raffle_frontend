@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+import NewRaffle from "./components/newRaffle/NewRaffle";
 import Raffles from "./components/raffles/Raffles";
-import ShowModal from "./components/modal/ShowModal";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -47,6 +47,12 @@ function App() {
           message: `Thank you for entering ${form.name}!`,
         });
         setForm({ name: "", secret_token: "" });
+
+        const updatedRafflesData = await fetch(`${API_URL}/raffles`);
+        if (updatedRafflesData.ok) {
+          const updatedRaffle = await updatedRafflesData.json();
+          setRaffles(updatedRaffle.data);
+        }
       } else {
         const errorData = await createRaffle.json();
         let errorMessage = errorData.error.includes("name")
@@ -81,40 +87,14 @@ function App() {
 
   return (
     <div className="App">
-      {modalContent && (
-        <ShowModal
-          type={modalContent.type}
-          message={modalContent.message}
-          open={open}
-          handleClose={handleClose}
-        >
-          {modalContent.type === "sucess" ? (
-            <div className="success">{modalContent.message}</div>
-          ) : (
-            <div className="error">{modalContent.message}</div>
-          )}
-        </ShowModal>
-      )}
-      <h2>New Raffle</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Raffle Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={form.name}
-          required
-          onChange={handleChange}
-        />
-        <label htmlFor="secret_token">Raffle Secret Token:</label>
-        <input
-          type="text"
-          id="secret_token"
-          value={form.secret_token}
-          required
-          onChange={handleChange}
-        />
-        <button>Create New Raffle</button>
-      </form>
+      <NewRaffle
+        form={form}
+        handleChange={handleChange}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        modalContent={modalContent}
+        open={open}
+      />
       <Raffles raffles={raffles} />
     </div>
   );
