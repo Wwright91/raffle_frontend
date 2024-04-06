@@ -1,8 +1,11 @@
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
 
 import NewRaffle from "./components/newRaffle/NewRaffle";
 import Raffles from "./components/raffles/Raffles";
+import RaffleDetails from "./components/raffleDetails/RaffleDetails";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -86,17 +89,28 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <NewRaffle
-        form={form}
-        handleChange={handleChange}
-        handleClose={handleClose}
-        handleSubmit={handleSubmit}
-        modalContent={modalContent}
-        open={open}
-      />
-      <Raffles raffles={raffles} />
-    </div>
+    <Router>
+      <h1>Raffle App</h1>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <NewRaffle
+                form={form}
+                handleChange={handleChange}
+                handleClose={handleClose}
+                handleSubmit={handleSubmit}
+                modalContent={modalContent}
+                open={open}
+              />
+              <Raffles raffles={raffles} />
+            </>
+          }
+        />
+        <Route path="/raffles/:id" element={<RaffleDetails />} />
+      </Routes>
+    </Router>
   );
 }
 
