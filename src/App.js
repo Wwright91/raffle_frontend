@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
 
+import NavBar from "./components/navBar/NavBar";
+import NewParticipant from "./components/newParticipant/NewParticipant";
 import NewRaffle from "./components/newRaffle/NewRaffle";
+import Participants from "./components/participants/Participants";
 import Raffles from "./components/raffles/Raffles";
-import RaffleDetails from "./components/raffleDetails/RaffleDetails";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -82,6 +84,13 @@ function App() {
     console.log("Form state after render:", form);
   }, [form]);
 
+  const findRaffleName = (id) => {
+    const match = raffles.find((raffle) => raffle.id === id);
+    if (match) {
+      return match.name;
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createNewRaffle();
@@ -90,8 +99,47 @@ function App() {
 
   return (
     <Router>
+      <AppContent
+        open={open}
+        raffles={raffles}
+        handleSubmit={handleSubmit}
+        form={form}
+        handleChange={handleChange}
+        handleClose={handleClose}
+        modalContent={modalContent}
+        findRaffleName={findRaffleName}
+      />
+    </Router>
+  );
+}
+
+const AppContent = ({
+  open,
+  raffles,
+  handleSubmit,
+  form,
+  handleChange,
+  handleClose,
+  modalContent,
+  findRaffleName,
+}) => {
+  return (
+    <>
       <h1>Raffle App</h1>
       <Routes>
+        <Route
+          path="/raffles/:id/*"
+          element={
+            <>
+              <NavBar findRaffleName={findRaffleName} />
+              <Routes>
+                <Route path="/" element={<NewParticipant />} />
+                <Route path="/participants" element={<Participants />} />
+                {/* <Route path="/raffles/:id/winner" element={<Winner />} /> */}
+              </Routes>
+            </>
+          }
+        />
         <Route
           path="/"
           element={
@@ -108,10 +156,9 @@ function App() {
             </>
           }
         />
-        <Route path="/raffles/:id" element={<RaffleDetails />} />
       </Routes>
-    </Router>
+    </>
   );
-}
+};
 
 export default App;

@@ -1,7 +1,14 @@
 import React from "react";
 import ShowModal from "../modal/ShowModal";
 
-const NewRaffle = ({form, handleChange, handleClose, handleSubmit, modalContent, open}) => {
+const NewRaffle = ({
+  form,
+  handleChange,
+  handleClose,
+  handleSubmit,
+  modalContent,
+  open,
+}) => {
   return (
     <div>
       {" "}

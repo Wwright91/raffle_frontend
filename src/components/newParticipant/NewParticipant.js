@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const NewParticipant = ({ id }) => {
+const NewParticipant = () => {
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -10,7 +11,9 @@ const NewParticipant = ({ id }) => {
     phone: "",
   });
 
-  // console.log("raffle_id", raffle_id)
+  const { id } = useParams();
+
+  // console.log("raffle_id", id)
 
   async function enterNewParticipant() {
     try {
@@ -50,7 +53,7 @@ const NewParticipant = ({ id }) => {
 
   return (
     <div>
-      <h4>Register to participate in the raffle:</h4>
+      <h5>Register to participate in the raffle:</h5>
       <form onSubmit={handleSubmit}>
         <label htmlFor="first_name">First Name:</label>
         <input

@@ -5,13 +5,9 @@ const Raffles = ({ raffles }) => {
   return (
     <div>
       <h3>Raffles</h3>
-      {
-        raffles.map((raffle, id) => {
-          return (
-            <Raffle raffle={raffle} key={id} />
-          )
-        })
-      }
+      {raffles.map((raffle, id) => {
+        return <Raffle raffle={raffle} key={id} />;
+      })}
     </div>
   );
 };
