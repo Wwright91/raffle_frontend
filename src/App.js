@@ -126,7 +126,7 @@ const AppContent = ({
 }) => {
   return (
     <>
-      <h1>Raffle App</h1>
+      <h2>Raffle App</h2>
       <Routes>
         <Route
           path="/raffles/:id/*"
