@@ -42,7 +42,6 @@ const Winner = () => {
       if (randomWinner.ok) {
         window.location.reload();
       }
-      // console.log({ randomWinner });
     } catch (error) {
       console.log(error.message);
     }
@@ -78,16 +77,16 @@ const Winner = () => {
                 </Typography>
                 <hr />
                 <Typography component="p">
-                  <span class="material-symbols-outlined">tag</span>{" "}
+                  <span className="material-symbols-outlined">tag</span>{" "}
                   {winner.winner_id}
                 </Typography>
                 <Typography component="p">
                   {" "}
-                  <span class="material-symbols-outlined">mail</span>{" "}
+                  <span className="material-symbols-outlined">mail</span>{" "}
                   {winner.email}
                 </Typography>
                 <Typography component="p">
-                  <span class="material-symbols-outlined">phone_enabled</span>{" "}
+                  <span className="material-symbols-outlined">phone_enabled</span>{" "}
                   {winner.phone}
                 </Typography>
               </CardContent>

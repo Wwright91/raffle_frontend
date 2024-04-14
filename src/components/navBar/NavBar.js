@@ -11,7 +11,7 @@ const NavBar = ({ findRaffleName }) => {
       <h3 className="NavBar__RaffleName">{findRaffleName(+id)}</h3>
       <Box className="NavBar__nav">
         <Link to="/" className="">
-          <span class="material-symbols-outlined">confirmation_number</span>
+          <span className="material-symbols-outlined">confirmation_number</span>
           <Typography>All Raffles</Typography>
         </Link>
         <Link
@@ -24,7 +24,7 @@ const NavBar = ({ findRaffleName }) => {
                 : "white",
           }}
         >
-          <span class="material-symbols-outlined">app_registration</span>
+          <span className="material-symbols-outlined">app_registration</span>
           <Typography>Register</Typography>
         </Link>
         <Link
@@ -35,7 +35,7 @@ const NavBar = ({ findRaffleName }) => {
               : "white",
           }}
         >
-          <span class="material-symbols-outlined">groups</span>
+          <span className="material-symbols-outlined">groups</span>
           <Typography>Participants</Typography>
         </Link>
         <Link

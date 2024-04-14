@@ -14,13 +14,13 @@ const Participant = ({ participant }) => {
           {first_name} {last_name}
         </h4>
         <p>
-          <span class="material-symbols-outlined">tag</span> {id}
+          <span className="material-symbols-outlined">tag</span> {id}
         </p>
         <p>
-          <span class="material-symbols-outlined">mail</span> {email}
+          <span className="material-symbols-outlined">mail</span> {email}
         </p>
         <p>
-          <span class="material-symbols-outlined">phone_enabled</span> {phone}
+          <span className="material-symbols-outlined">phone_enabled</span> {phone}
         </p>
       </div>
     </div>
