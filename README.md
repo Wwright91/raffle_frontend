@@ -13,7 +13,7 @@ d. Run `git clone 'https url' && cd $_ `.
 1. Start the server.<br/>
 a. Run `code .` to open project in code editor.<br/>
 b. Create `.env` file in root of project.<br/>
-c. Paste `REACT_APP_API_URL=https://raffle-backend-k3mn.onrender.com` in `.env`.<br/>
+c. Paste `REACT_APP_API_URL=https://raffle-backend-k3mn.onrender.com/api` in `.env`.<br/>
 d. Run `npm start` to start the server.
 
 Your server is now running!
