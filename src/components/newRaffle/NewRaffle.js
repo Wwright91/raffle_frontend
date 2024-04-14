@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./NewRaffle.scss";
 
 import Button from "@mui/material/Button";
@@ -8,6 +8,8 @@ import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 
 import ShowModal from "../modal/ShowModal";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const NewRaffle = ({
   form,
@@ -17,6 +19,12 @@ const NewRaffle = ({
   modalContent,
   open,
 }) => {
+  const [showToken, setShowToken] = useState(false);
+
+  const handleShowToken = () => {
+    setShowToken(!showToken);
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -48,7 +56,18 @@ const NewRaffle = ({
         <FormControl>
           <InputLabel htmlFor="secret_token">Raffle Secret Token:*</InputLabel>
           <Input
-            type="text"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleShowToken}
+                  edge="end"
+                >
+                  {showToken ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            type={showToken ? "text" : "password"}
             id="secret_token"
             value={form.secret_token}
             required
