@@ -10,12 +10,18 @@ const Participant = ({ participant }) => {
         alt="avatar"
       />
       <div>
-        <h3>
+        <h4>
           {first_name} {last_name}
-        </h3>
-        <p># {id}</p>
-        <p>{email}</p>
-        <p>{phone}</p>
+        </h4>
+        <p>
+          <span class="material-symbols-outlined">tag</span> {id}
+        </p>
+        <p>
+          <span class="material-symbols-outlined">mail</span> {email}
+        </p>
+        <p>
+          <span class="material-symbols-outlined">phone_enabled</span> {phone}
+        </p>
       </div>
     </div>
   );

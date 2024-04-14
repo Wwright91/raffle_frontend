@@ -58,7 +58,7 @@ const NewParticipant = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <h4>Register to participate in the raffle:</h4>
-        <div className="Participants">
+        <div className="NewParticipants">
           <FormControl sx={{ width: "50%" }}>
             <InputLabel htmlFor="first_name">First Name:*</InputLabel>
             <Input

@@ -19,8 +19,8 @@ const Participants = () => {
   }, [id]);
 
   return (
-    <div>
-      <h2>Participants: {participants.length} Total</h2>
+    <div className="Participants">
+      <h3>Participants: {participants.length} Total</h3>
       {participants.map((participant) => {
         return <Participant key={participant.id} participant={participant} />;
       })}

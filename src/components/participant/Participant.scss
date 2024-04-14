@@ -1,9 +1,19 @@
 .Participant {
   display: flex;
+  border-bottom: 1px solid rgb(201, 201, 201);
+  padding: 10px;
+
+  p {
+    font-size: medium;
+  }
 
   img {
     width: 150px;
     height: 150px;
     border-radius: 80px;
+  }
+
+  span {
+    vertical-align: bottom;
   }
 }
