@@ -13,17 +13,30 @@ import Winner from "./components/winner/Winner";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function App() {
+  const [errMsg, setErrMsg] = useState("");
   const [form, setForm] = useState({ name: "", secret_token: "" });
+  const [loading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [open, setOpen] = useState(false);
   const [raffles, setRaffles] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`${API_URL}/raffles`);
-      const { data } = await res.json();
-      if (res.ok) {
-        setRaffles(data);
+      try {
+        setLoading(true);
+        setErrMsg("");
+        const res = await fetch(`${API_URL}/raffles`);
+        const { data, error } = await res.json();
+
+        if (res.ok) {
+          setRaffles(data);
+        } else {
+          throw new Error(error);
+        }
+      } catch (error) {
+        setErrMsg(error.message);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
@@ -50,7 +63,7 @@ function App() {
       if (createRaffle.ok) {
         setModalContent({
           type: "Raffle Created Successfully",
-          message: `Thank you for entering ${form.name}!`,
+          message: `Thank you for entering: ${form.name}!`,
         });
         setForm({ name: "", secret_token: "" });
 
@@ -70,7 +83,7 @@ function App() {
         });
       }
     } catch (error) {
-      console.log(error.message);
+      setErrMsg(error.message);
     }
   }
 
@@ -80,10 +93,6 @@ function App() {
     }, 5000);
     return () => clearTimeout(timeout);
   }, [modalContent]);
-
-  useEffect(() => {
-    console.log("Form state after render:", form);
-  }, [form]);
 
   const findRaffleName = (id) => {
     const match = raffles.find((raffle) => raffle.id === id);
@@ -98,68 +107,54 @@ function App() {
     setOpen(true);
   };
 
+  const renderContent = () => {
+    if (loading) {
+      return <div>Loading...</div>;
+    } else if (errMsg) {
+      return <div>Error: {errMsg}</div>;
+    } else {
+      return (
+        <Routes>
+          <Route
+            path="/raffles/:id/*"
+            element={
+              <>
+                <NavBar findRaffleName={findRaffleName} />
+                <Routes>
+                  <Route path="/" element={<NewParticipant />} />
+                  <Route path="/participants" element={<Participants />} />
+                  <Route path="/winner" element={<Winner />} />
+                </Routes>
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                <NewRaffle
+                  form={form}
+                  handleChange={handleChange}
+                  handleClose={handleClose}
+                  handleSubmit={handleSubmit}
+                  modalContent={modalContent}
+                  open={open}
+                />
+                <Raffles raffles={raffles} />
+              </>
+            }
+          />
+        </Routes>
+      );
+    }
+  };
+
   return (
     <Router>
-      <AppContent
-        open={open}
-        raffles={raffles}
-        handleSubmit={handleSubmit}
-        form={form}
-        handleChange={handleChange}
-        handleClose={handleClose}
-        modalContent={modalContent}
-        findRaffleName={findRaffleName}
-      />
+      <h2>Raffle App</h2>
+      {renderContent()}
     </Router>
   );
 }
-
-const AppContent = ({
-  open,
-  raffles,
-  handleSubmit,
-  form,
-  handleChange,
-  handleClose,
-  modalContent,
-  findRaffleName,
-}) => {
-  return (
-    <>
-      <h2>Raffle App</h2>
-      <Routes>
-        <Route
-          path="/raffles/:id/*"
-          element={
-            <>
-              <NavBar findRaffleName={findRaffleName} />
-              <Routes>
-                <Route path="/" element={<NewParticipant />} />
-                <Route path="/participants" element={<Participants />} />
-                <Route path="/winner" element={<Winner />} />
-              </Routes>
-            </>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <>
-              <NewRaffle
-                form={form}
-                handleChange={handleChange}
-                handleClose={handleClose}
-                handleSubmit={handleSubmit}
-                modalContent={modalContent}
-                open={open}
-              />
-              <Raffles raffles={raffles} />
-            </>
-          }
-        />
-      </Routes>
-    </>
-  );
-};
 
 export default App;
