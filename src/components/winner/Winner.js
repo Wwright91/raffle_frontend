@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./Winner.scss";
+
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import Input from "@mui/material/Input";
+import InputAdornment from "@mui/material/InputAdornment";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+
+import { CardContent, FormLabel, Typography } from "@mui/material";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Winner = () => {
-  const [winner, setWinner] = useState([]);
   const [form, setForm] = useState({
     secret_token: "",
   });
+  const [winner, setWinner] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     async function fetchData() {
       const res = await fetch(`${API_URL}/raffles/${id}/winner`);
       const { data } = await res.json();
-      console.log(data);
       setWinner(data);
     }
     fetchData();
@@ -33,8 +42,7 @@ const Winner = () => {
       if (randomWinner.ok) {
         window.location.reload();
       }
-
-      console.log({ randomWinner });
+      // console.log({ randomWinner });
     } catch (error) {
       console.log(error.message);
     }
@@ -52,37 +60,73 @@ const Winner = () => {
   return (
     <div>
       {winner?.winner_id ? (
-        <div>
-          <h5>Winner</h5>
-          <img
-            src="https://st4.depositphotos.com/6837936/30051/v/450/depositphotos_300513966-stock-illustration-and-the-winner-is-hand.jpg"
-            alt="winner"
-            height="200px"
-            width="200px"
-          />
-          <h6>
-            {winner.first_name} {winner.last_name}
-          </h6>
-          <p>Registered on {winner.created_on}</p>
-          <p># {winner.winner_id}</p>
-          <p>{winner.email}</p>
-          <p>{winner.phone}</p>
-        </div>
+        <>
+          <h3>Winner</h3>
+          <div className="Winner">
+            <Card>
+              <CardMedia
+                component="img"
+                image="https://st4.depositphotos.com/6837936/30051/v/450/depositphotos_300513966-stock-illustration-and-the-winner-is-hand.jpg"
+                title="winner"
+              />
+              <CardContent>
+                <Typography component="h3">
+                  {winner.first_name} {winner.last_name}
+                </Typography>
+                <Typography component="p">
+                  Registered on {new Date(winner.created_on).toString()}
+                </Typography>
+                <hr />
+                <Typography component="p">
+                  <span class="material-symbols-outlined">tag</span>{" "}
+                  {winner.winner_id}
+                </Typography>
+                <Typography component="p">
+                  {" "}
+                  <span class="material-symbols-outlined">mail</span>{" "}
+                  {winner.email}
+                </Typography>
+                <Typography component="p">
+                  <span class="material-symbols-outlined">phone_enabled</span>{" "}
+                  {winner.phone}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
+        </>
       ) : (
-        <div>
-          <h5>Pick a Winner</h5>
+        <div className="PickWinner">
+          <h3>Pick a Winner</h3>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="secret_token">key</label>
-            <input
-              type="text"
-              id="secret_token"
-              value={form.secret_token}
-              placeholder="Secret token"
-              required
-              onChange={handleChange}
-            />
-            <button>Submit</button>
+            <FormControl>
+              <FormLabel htmlFor="secret_token"></FormLabel>
+              <Input
+                startAdornment={
+                  <InputAdornment position="start">
+                    <span className="material-symbols-outlined">
+                      key_vertical
+                    </span>
+                  </InputAdornment>
+                }
+                type="text"
+                id="secret_token"
+                value={form.secret_token}
+                placeholder="Secret token"
+                required
+                onChange={handleChange}
+              />
+            </FormControl>
+            <Button type="submit" sx={{ bgcolor: "grey", color: "white" }}>
+              Pick a Winner
+            </Button>
           </form>
+          <br />
+          <div className="Secret_Token">
+            <h4>Secret Token</h4>
+            <p>
+              The secret token used when creating the raffle must be provided.
+            </p>
+          </div>
         </div>
       )}
     </div>
