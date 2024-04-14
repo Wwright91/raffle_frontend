@@ -1,0 +1,28 @@
+.NavBar {
+
+  &__nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  a {
+    display: grid;
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid black;
+    justify-content: center;
+    color: black;
+
+    &:hover {
+      color: rgb(183, 178, 105);
+    }
+
+    span {
+      margin-left: 20px;
+    }
+  }
+}
+
+  &__RaffleName {
+    text-align: center;
+  }
+}
