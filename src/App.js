@@ -8,6 +8,7 @@ import NewParticipant from "./components/newParticipant/NewParticipant";
 import NewRaffle from "./components/newRaffle/NewRaffle";
 import Participants from "./components/participants/Participants";
 import Raffles from "./components/raffles/Raffles";
+import Winner from "./components/winner/Winner";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -135,7 +136,7 @@ const AppContent = ({
               <Routes>
                 <Route path="/" element={<NewParticipant />} />
                 <Route path="/participants" element={<Participants />} />
-                {/* <Route path="/raffles/:id/winner" element={<Winner />} /> */}
+                <Route path="/winner" element={<Winner />} />
               </Routes>
             </>
           }
